@@ -1,5 +1,5 @@
 var util = require('util');
-var cooking = require('./cooking.js');
+var cooking = require('./cooking_db.js');
 
 cooking.addRecipe({'foobar' : ['foo', 'bar', 'baz', 'blarg']});
 cooking.getRecipes(function(recipes) {

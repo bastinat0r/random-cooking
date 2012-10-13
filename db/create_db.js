@@ -3,7 +3,7 @@ var util = require('util');
 var fs = require('fs');
 var timer = require('timers');
 
-function createDB(opts, desginPath, cb) {
+function createDB(opts, designPath, cb) {
 	util.puts('Creating DB: ' + opts.path);	
 	util.puts(JSON.stringify(opts));
 	var req = http.request(opts, function(res) {
@@ -11,14 +11,14 @@ function createDB(opts, desginPath, cb) {
 			util.puts(data);
 		});
 		res.on('end', function() {
-			cb(designPath);
+			cb(opts, designPath);
 		});
 	});
 	req.end();
 };
 
 
-function putDesign(designPath) {
+function putDesign(opts, designPath) {
 	opts.path = opts.path + designPath;
 	opts.method = 'PUT';
 	util.puts(JSON.stringify(opts));
@@ -41,15 +41,18 @@ function putDesign(designPath) {
 	});
 }
 
-var opts = {
+var opts1 = {
 	host : 'localhost',
 	port : 5984,
 	method: 'PUT',
 	path : '/components/'
 }
-designPath = '_design/components';
-createDB(opts, designPath,  putDesign);
+createDB(opts1, '_design/components',  putDesign);
 
-opts.path = '/recipes/';
-designPath = '_design/recipes';
-createDB(opts, designPath,  putDesign);
+var opts2 = {
+	host : 'localhost',
+	port : 5984,
+	method: 'PUT',
+	path : '/recipes/'
+}
+createDB(opts2, '_design/recipes',  putDesign);
