@@ -10,14 +10,17 @@ function createDB(opts, desginPath, cb) {
 		res.on('data', function(data) {
 			util.puts(data);
 		});
+		res.on('end', function() {
+			cb(designPath);
+		});
 	});
-	timer.setTimeout(cb(designPath), 300);
 	req.end();
 };
 
 
 function putDesign(designPath) {
 	opts.path = opts.path + designPath;
+	opts.method = 'PUT';
 	util.puts(JSON.stringify(opts));
 	var req = http.request(opts, function(res) {
 		res.on('data', function(data) {
@@ -27,7 +30,7 @@ function putDesign(designPath) {
 
 	fs.readFile('./'+designPath+'.json', 'utf8', function(err, data) {
 		if(err) {
-			util.puts(err);
+			util.puts('ERROR while reading File: ' + err);
 			req.end();
 		}
 		else {
@@ -42,11 +45,11 @@ var opts = {
 	host : 'localhost',
 	port : 5984,
 	method: 'PUT',
-	path : '/components'
+	path : '/components/'
 }
 designPath = '_design/components';
 createDB(opts, designPath,  putDesign);
 
-opts.path = '/recipes';
+opts.path = '/recipes/';
 designPath = '_design/recipes';
 createDB(opts, designPath,  putDesign);

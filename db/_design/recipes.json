@@ -1,5 +1,5 @@
 {	
-	"_id" : "_design/zutat",
+	"_id" : "_design/recipes",
 	"views" : {	
 		"json" : {
 			"map" : "function (doc) { emit(null, doc);}"
