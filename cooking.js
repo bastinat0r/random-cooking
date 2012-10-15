@@ -1,22 +1,29 @@
 var util = require('util');
 var http = require('http');
 var fs = require('fs');
-
 var db = require('./cooking_db.js');
 
-var index = "";
-
-fs.readFile('./htdocs/index.html', 'utf-8', function(err, data) {
-	if(err) 
-		util.puts(err);
-	else
-		index = index + data;
-});
-
-var srv = http.createServer(function (req, res) {
-	req.on('end', function() {
-		res.writeHead(200);
-		res.end(index);
+exports.getRandomRecipe = getRandomRecipe;
+exports.randomizedRecipe = randomizedRecipe;
+function randomizedRecipe(cb) {
+	getRandomRecipe(function(recipe) {
+		var result=[];
+		var category = recipe.value.components;
+		for(i in category) {
+			db.getComponents(function(components) {
+				var z = Math.random() * components.length;
+//				util.puts(components[Math.floor(z)].value.name);
+				result.push(components[Math.floor(z)].value.name);
+//				util.puts(JSON.stringify(result));
+				if(result.length == category.length) cb(result);
+			}, category[i]);
+		}
 	});
-});
-srv.listen(8080);
+}
+
+function getRandomRecipe(cb) {
+	db.getRecipes(function(recipes) {
+		var i = Math.random() * recipes.length;
+		cb(recipes[Math.floor(i)]);
+	});
+}

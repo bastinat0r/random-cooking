@@ -26,13 +26,16 @@ function addComponent(compontent, cb) {
 	if(cb) cb();
 };
 
-function getComponents(cb) {
-	getView('/components/_design/components/_view/json', cb);
+function getComponents(cb, key) {
+	getView('/components/_design/components/_view/json', cb, key);
 };
 
-function getView(path, cb) {
+function getView(path, cb, key) {
 	opts.method = 'GET';
 	opts.path = path;
+	if(key) {
+		opts.path = opts.path + '?key=%22' + key +'%22'
+	}
 	var req = http.request(opts, function(res) {
 		var data = "";
 		res.on('data', function(chunk) {
@@ -40,7 +43,7 @@ function getView(path, cb) {
 		});
 		res.on('end', function() {
 			try {
-				cb(JSON.parse(data));
+				cb(JSON.parse(data).rows);
 			} catch (err){
 				util.puts('ERROR: ' + err);
 				cb();
