@@ -50,6 +50,7 @@ function getView(path, cb, key) {
 			}
 		});
 	});
+	req.on('error', function(error) {util.puts('Couchdb up and running?\n' + error)});
 	req.end();
 };
 
@@ -76,6 +77,7 @@ function putDB (dbObject, dbName) {
 			req.end();	
 		});
 	});
+	req.on('error', function(error) {util.puts('Couchdb up and running?\n' + error)});
 	req.end();
 }
 
