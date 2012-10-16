@@ -116,7 +116,7 @@ if(false) {
 	}
 	var srv = http.createServer(function (req, res) {
 		req.on('end', function() {
-			res.writeHead(200);
+			res.writeHead(200, {'content-type' : 'text/html; charset=utf-8'});
 			replacement = "";
 			cooking.randomizedRecipe(function(recipe) {
 				for(i in recipe) {
