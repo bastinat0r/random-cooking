@@ -5,7 +5,7 @@ exports.addRecipe = addRecipe;
 exports.getRecipes = getRecipes;
 exports.addComponent = addComponent;
 exports.getComponents = getComponents;
-
+exports.getCategories = getCategories;
 
 var opts = {
 	host : 'localhost',
@@ -29,6 +29,10 @@ function addComponent(compontent, cb) {
 function getComponents(cb, key) {
 	getView('/components/_design/components/_view/json', cb, key);
 };
+
+function getCategories(cb) {
+//	getComponents(
+}
 
 function getView(path, cb, key) {
 	opts.method = 'GET';

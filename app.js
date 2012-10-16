@@ -47,6 +47,7 @@ if(false) {
 	addStuff('Schweinefleisch', 'Fleisch');
 	addStuff('Hase', 'Fleisch');
 	addStuff('Hackfleisch', 'Fleisch');
+	addStuff('Wiener Würstchen', 'Fleisch');
 	addStuff('Zwiebel', 'Wurzeln');
 	addStuff('Knoblauch', 'Wurzeln');
 	addStuff('Möhre', 'Wurzeln');
@@ -58,6 +59,7 @@ if(false) {
 	addStuff('Banane', 'Obst');
 	addStuff('Apfel', 'Obst');
 	addStuff('Birne', 'Obst');
+	addStuff('Mango', 'Obst');
 	addStuff('Petersilie', 'Kraut');
 	addStuff('Kresse', 'Kraut');
 	addStuff('Rukola', 'Kraut');
@@ -69,6 +71,9 @@ if(false) {
 	addStuff('Bier', 'Flüssigkeit');
 	addStuff('Wein', 'Flüssigkeit');
 	addStuff('Met', 'Flüssigkeit');
+	addStuff('Mate', 'Flüssigkeit');
+	addStuff('Milch', 'Flüssigkeit');
+	addStuff('Kaffee', 'Flüssigkeit');
 	addStuff('Nudeln', 'Stärke');
 	addStuff('Reis', 'Stärke');
 	addStuff('Kartoffeln', 'Stärke');
@@ -112,11 +117,12 @@ if(false) {
 	var srv = http.createServer(function (req, res) {
 		req.on('end', function() {
 			res.writeHead(200);
+			replacement = "";
 			cooking.randomizedRecipe(function(recipe) {
 				for(i in recipe) {
-					res.write(recipe[i] + '\n')
+					replacement = replacement + '<li>' + recipe[i] + '</li>\n'
 				}
-				res.end();
+				res.end(index.replace('<replaceme>', replacement));
 			});
 		});
 	});
