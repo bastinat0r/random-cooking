@@ -75,11 +75,6 @@ function putDB (dbObject, dbName) {
 
 			req.on('error', function (err) {
 				util.puts(JSON.stringify(err));
-				req = http.request(opts, function(res) {
-					res.on('data', function(data) {
-						util.puts(data);
-					});
-				});
 			});
 			util.puts(JSON.stringify(dbObject));
 			req.write(JSON.stringify(dbObject));
